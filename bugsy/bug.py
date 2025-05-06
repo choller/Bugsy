@@ -115,7 +115,7 @@ class Bug(object):
         return [Comment(bugsy=self._bugsy, **comments) for comments
                 in res['bugs'][bug]['comments']]
 
-    def add_comment(self, comment):
+    def add_comment(self, comment, delay=False, is_private=False):
         """
             Adds a comment to a bug. If the bug object does not have a bug ID
             (ie you are creating a bug) then you will need to also call `put`
@@ -133,12 +133,21 @@ class Bug(object):
         """
         # If we have a key post immediately otherwise hold onto it until
         # put(bug) is called
-        if 'id' in self._bug:
+        if 'id' in self._bug and not delay:
+            comment_obj = { "comment": comment }
+            if is_private:
+                comment_obj['is_private'] = True
             self._bugsy.request('bug/{}/comment'.format(self._bug['id']),
-                                method='POST', json={"comment": comment}
+                                method='POST', json=comment_obj
                                 )
+        elif 'id' not in self._bug:
+            self._bug['description'] = comment
+            if is_private:
+                self._bug['comment_is_private'] = True
         else:
-            self._bug['comment'] = comment
+            self._bug['comment'] = { 'body': comment }
+            if is_private:
+                self._bug['comment']['is_private'] = True
 
     def get_attachments(self):
         """

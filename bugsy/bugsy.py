@@ -186,8 +186,20 @@ class Bugsy(object):
             else:
                 raise BugsyException(result['message'])
         else:
+            changed = bug.diff()
+
+            if 'description' in changed:
+                # Specifying description during the update of an existing bug
+                # is not allowed and raises an error.
+                del changed['description']
+
+            # Add a potentially delayed comment along with our changes
+            comment = bug._bug.pop('comment', None)
+            if comment is not None:
+                changed['comment'] = comment
+
             result = self.request('bug/%s' % bug.id, 'PUT',
-                                  json=bug.diff())
+                                  json=changed)
             updated_bug = self.get(bug.id)
             return updated_bug
 

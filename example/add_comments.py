@@ -16,6 +16,12 @@ bz.put(bug)
 # Add another comment to that bug.
 bug.add_comment('I do love eggs too')
 
+# We might want to comment and close the bug at the same time
+bug.add_comment('Enough eggs for now.', delay=True)
+bug.status = "RESOLVED"
+bug.resolution = "FIXED"
+bz.put(bug)
+
 # Add a comment to an existing bug for whom we don't
 # have a bug object (and don't wish to fetch it).
 bug = bz.get(123456)
