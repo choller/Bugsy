@@ -1,5 +1,11 @@
 import bugsy
-bz = bugsy.Bugsy("username", "password", "https://bugzilla-dev.allizom.org/rest")
+import os
+
+# Using an API key is the preferred way to authenticate to Bugzilla and as long as your operations
+# don't require authentication, this code will work even without an API key.
+#
+# Using username and password is deprecated, as it is not compatible with two-factor authentication.
+bz = bugsy.Bugsy(api_key=os.getenv("BZ_API_KEY"), bugzilla_url="https://bugzilla-dev.allizom.org/rest")
 
 # Create a new bug with a comment 0 set.
 bug = bugsy.Bug()
