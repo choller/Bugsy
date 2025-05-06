@@ -8,6 +8,7 @@ import os
 bz = bugsy.Bugsy(api_key=os.getenv("BZ_API_KEY"), bugzilla_url="https://bugzilla-dev.allizom.org/rest")
 
 bug = bugsy.Bug()
+bug.type = "enhancement"
 bug.summary = "I love cheese"
 bug.add_comment('I do love sausages')
 bz.put(bug)
