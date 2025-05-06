@@ -47,6 +47,7 @@ class Bug(object):
         self._bug['component'] = kwargs.get('component', 'general')
         self._bug['platform'] = kwargs.get('platform', 'All')
         self._bug['version'] = kwargs.get('version', 'unspecified')
+        self._bug['type'] = kwargs.get('type', 'defect')
 
     def __getattr__(self, attr):
         if attr not in self._bug:
