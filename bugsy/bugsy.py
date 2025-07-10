@@ -4,11 +4,11 @@ from .errors import (BugsyException, LoginException)
 from .search import Search
 
 ALLOWED_FIELDS = [
-    "alias", "assigned_to", "blocked", "cc", "comment_is_private", "comment_tags",
-    "component", "dependson", "description", "filed_via", "flags", "groups",
+    "alias", "assigned_to", "blocked", "blocks", "cc", "comment_is_private", "comment_tags",
+    "component", "dependson", "depends_on", "description", "filed_via", "flags", "groups",
     "is_markdown", "keywords", "op_sys", "platform", "priority", "product",
     "qa_contact", "regressed_by", "resolution", "severity", "status", "summary",
-    "target_milestone", "type", "version"
+    "target_milestone", "type", "version", "whiteboard"
 ]
 
 
